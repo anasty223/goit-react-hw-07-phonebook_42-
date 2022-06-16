@@ -1,10 +1,9 @@
-import { useState } from "react";
 import Form from "./components/Form/Form";
 import ContactsList from "./components/ContactsList/ContactsList";
 import Filter from "./components/Filter/Filter";
-import { nanoid } from "nanoid";
+
 import Div from "./components/Container/Container";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import {
@@ -20,7 +19,7 @@ export default function App() {
   console.log("data", data);
   console.log("isLoading", isLoading);
 
-  const deleteContact = useDeleteContactsMutation();
+  const [deleteContact] = useDeleteContactsMutation();
 
   const getVisibleContact = () => {
     const normalizeFilter = filter.toLowerCase();

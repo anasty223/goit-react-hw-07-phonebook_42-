@@ -1,16 +1,14 @@
 import { Input, Label, ButtonAdd, Icon } from "./Form.styles";
 import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { addContacts } from "../../redux/action";
 import { toast, ToastContainer } from "react-toastify";
 import { AiFillFolderOpen } from "react-icons/ai";
 import { useAddContactsMutation } from "../../redux/contacts";
 
 export default function Form({ contacts }) {
-  const addContact = useAddContactsMutation();
+  const [addContact] = useAddContactsMutation();
 
   const [name, setName] = useState("");
-  const [number, setNumber] = useState("");
+  const [phone, setPhone] = useState("");
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -20,8 +18,8 @@ export default function Form({ contacts }) {
         setName(value);
         break;
 
-      case "number":
-        setNumber(value);
+      case "phone":
+        setPhone(value);
         break;
 
       default:
@@ -35,7 +33,7 @@ export default function Form({ contacts }) {
     if (returnName) {
       toast.warn("This name is already in the phonebook ");
     } else {
-      addContact({ name, number });
+      addContact({ name, phone });
 
       toast(({ data }) => `Added ${name} in Phonebook`, {
         data: "world",
@@ -43,7 +41,7 @@ export default function Form({ contacts }) {
     }
 
     setName("");
-    setNumber("");
+    setPhone("");
   };
 
   return (
@@ -66,11 +64,11 @@ export default function Form({ contacts }) {
           Number
           <Input
             type="tel"
-            name="number"
+            name="phone"
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
             required
-            value={number}
+            value={phone}
             onChange={handleInputChange}
           />
           <ButtonAdd type="submit">
