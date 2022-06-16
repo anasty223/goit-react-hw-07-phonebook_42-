@@ -19,6 +19,6 @@ export default ContactItem;
 ContactItem.propTypes = {
   name: PropTypes.string.isRequired,
   number: PropTypes.string,
-  // func: PropTypes.func.isRequired,
+  func: PropTypes.func.isRequired,
   id: PropTypes.string,
 };
