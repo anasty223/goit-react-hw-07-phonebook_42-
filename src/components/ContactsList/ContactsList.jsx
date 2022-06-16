@@ -1,25 +1,17 @@
 import PropTypes from "prop-types";
-import { List} from "./ContactList.styles";
-import { useSelector, useDispatch } from "react-redux";
-import { deleteContact } from "../../redux/action";
-import { getVisibleContacts, getContacts } from "../../redux/items-selector";
+import { List } from "./ContactList.styles";
 import ContactItem from "../ContactItem/ContactItem";
 
-function ContactsList() {
-  const contacts = useSelector(getContacts);
-  // console.log("contacts", contacts);
-
-  const dispatch = useDispatch();
-
+function ContactsList({ contacts, onDeleteContact }) {
   return (
     <List>
-      {contacts.map(({ id, name, number }) => (
+      {contacts.map(({ id, name, phone }) => (
         <ContactItem
           key={id}
           id={id}
           name={name}
-          number={number}
-          onDeleteContact={(id) => dispatch(deleteContact(id))}
+          phone={phone}
+          func={onDeleteContact}
         />
       ))}
     </List>

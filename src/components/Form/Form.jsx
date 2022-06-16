@@ -4,12 +4,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { addContacts } from "../../redux/action";
 import { toast, ToastContainer } from "react-toastify";
 import { AiFillFolderOpen } from "react-icons/ai";
+import { useAddContactsMutation } from "../../redux/contacts";
 
-import { getContacts } from "../../redux/items-selector";
-
-export default function Form() {
-  const contacts = useSelector(getContacts);
-  const dispatch = useDispatch();
+export default function Form({ contacts }) {
+  const addContact = useAddContactsMutation();
 
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
@@ -37,9 +35,7 @@ export default function Form() {
     if (returnName) {
       toast.warn("This name is already in the phonebook ");
     } else {
-      // setName(name);
-      // setNumber(number);
-      dispatch(addContacts({ name, number }));
+      addContact({ name, number });
 
       toast(({ data }) => `Added ${name} in Phonebook`, {
         data: "world",

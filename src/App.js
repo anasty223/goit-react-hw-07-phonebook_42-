@@ -7,16 +7,20 @@ import Div from "./components/Container/Container";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { useGetContactsQuery } from "../src/redux/contacts";
+import {
+  useGetContactsQuery,
+  useDeleteContactsMutation,
+} from "../src/redux/contacts";
 import { useSelector } from "react-redux";
 import { getFilter } from "./redux/items-selector";
 
 export default function App() {
-  const [contacts, setContats] = useState([]);
   const { data, isLoading } = useGetContactsQuery();
   const filter = useSelector(getFilter);
   console.log("data", data);
   console.log("isLoading", isLoading);
+
+  const deleteContact = useDeleteContactsMutation();
 
   const getVisibleContact = () => {
     const normalizeFilter = filter.toLowerCase();
@@ -29,11 +33,16 @@ export default function App() {
     <Div>
       <h1>Phonebook</h1>
 
-      <Form />
+      <Form contacts={data} />
 
       <Filter />
       <h2>Contacts</h2>
-      <ContactsList contacts={data} />
+      {data && (
+        <ContactsList
+          contacts={getVisibleContact()}
+          onDeleteContact={deleteContact}
+        />
+      )}
       <ToastContainer />
     </Div>
   );
